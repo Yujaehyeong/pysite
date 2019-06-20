@@ -17,9 +17,20 @@ from django.contrib import admin
 from django.urls import path
 
 import main.views as main_views
+import user.views as user_views
+import guestbook.views as guestbook_views
 
 urlpatterns = [
+    path('guestbook/deleteform', guestbook_views.deleteform),
+    path('guestbook/delete', guestbook_views.delete),
+    path('guestbook/add', guestbook_views.add),
+    path('guestbook', guestbook_views.list),
+
+    path('user/loginform', user_views.loginform),
+    path('user/joinsuccess', user_views.joinsuccess),
+    path('user/joinform', user_views.joinform),
+    path('user/join', user_views.join),
     path('', main_views.index),
 
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls)
 ]

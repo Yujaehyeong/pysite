@@ -59,7 +59,11 @@
 
       python_ch3
           |
-          |------  templates (»ý¼º)
+          |------  templates (생성)
+
+   4) STATIC 디렉토리 설정 및 url 매핑 (settings.py)
+      STATICFILES_DIRS = (os.path.join(BASE_DIR, 'statics'),)
+      STATIC_URL = '/assets/'
 
 7. 장고프로젝트의 기본 관리 어플리케이션이 사용하는 테이블을 생성
     물리DB와 생성된 테이블과의 Sync를 맞춰야하기 때문에 이부분에서 오류가 많이남.
@@ -110,10 +114,8 @@ Application 작업
 		]
 
 	3. template
-		|---pysite
+		|---user
 		어플리케이션 template 디렉토리 생성
-
-    4. STATICS
 
 	4-1 Model 정의(생략)
 	4-2 admin.py에
