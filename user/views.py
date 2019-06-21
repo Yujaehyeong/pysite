@@ -1,5 +1,8 @@
+from typing import Counter
+
+from django.db.models import Max
 from django.forms import model_to_dict
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -14,7 +17,7 @@ def joinsuccess(request):
     return render(request, 'user/joinsuccess.html')
 
 def loginform(request):
-    return render(request, '/user/loginform.html')
+    return render(request, 'user/loginform.html')
 
 def login(request):
     results = User.objects.filter(email=request.POST['email']).filter(password=request.POST['password'])
@@ -77,3 +80,6 @@ def checkemail(request):
         'data': 'not exist' if user is None else 'exist'
     }
     return JsonResponse(result)
+
+
+
