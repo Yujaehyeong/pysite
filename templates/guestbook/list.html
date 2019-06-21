@@ -1,4 +1,5 @@
 {% extends '../base.html' %}
+{% load mathfilters %}
 
 {% block csslink %}
 <link href="/assets/css/guestbook.css" rel="stylesheet" type="text/css">
@@ -21,25 +22,46 @@
 						</tr>
 					</table>
 				</form>
-                {% for guestbook in guestbooklist %}
 				<ul>
 					<li>
-						<table>
+				{#--{{ guestbooklist | length}} : {{ guestbooklist.count | add:1 | sub:2}}--#}
+                {% for guestbook in guestbooklist %}
+					{% if forloop.first %}
+						<table style='border-collapse: collapse; border: 2px solid #666; background: #FFFFF3'>
 							<tr>
-								<td>[4]</td>
+								{% comment 'forloop variable'%}
+								<td>[{{forloop.revcounter}}]</td>
+								{% endcomment %}
+								<td>[{{guestbooklist.count | sub:forloop.counter | add:1}}]</td>
 								<td>{{guestbook.name}}</td>
-								<td>2015-11-10 11:22:30</td>
+								<td>{{guestbook.regdate | date:'Y-m-d H:i:s'}}</td>
 								<td><a href="/guestbook/deleteform?id={{guestbook.id}}">삭제</a></td>
 							</tr>
 							<tr>
 								<td colspan=4>
-								{{guestbook.contents}}
+								{{guestbook.contents | linebreaksbr}}
 								</td>
 							</tr>
 						</table>
 						<br>
+					{% else %}
+						<table>
+							<tr>
+								<td>{{forloop.counter}}</td>
+								<td>{{guestbook.name}}</td>
+								<td>{{guestbook.regdate | date:'Y-m-d H:i:s'}}</td>
+								<td><a href="/guestbook/deleteform?id={{guestbook.id}}">삭제</a></td>
+							</tr>
+							<tr>
+								<td colspan=4>
+								{{guestbook.contents | linebreaksbr}}
+								</td>
+							</tr>
+						</table>
+						<br>
+					{% endif %}
+                {% endfor %}
 					</li>
 				</ul>
-                {% endfor %}
 			</div>
 {% endblock %}
