@@ -26,7 +26,12 @@ urlpatterns = [
     path('guestbook/add', guestbook_views.add),
     path('guestbook', guestbook_views.list),
 
+    path('user/api/checkemail', user_views.checkemail),
+    path('user/update', user_views.update),
+    path('user/updateform', user_views.updateform),
+    path('user/logout', user_views.logout),
     path('user/loginform', user_views.loginform),
+    path('user/login', user_views.login),
     path('user/joinsuccess', user_views.joinsuccess),
     path('user/joinform', user_views.joinform),
     path('user/join', user_views.join),

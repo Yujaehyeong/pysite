@@ -28,6 +28,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'board',
     'guestbook',
     'main',
     'user',
@@ -122,3 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'statics'),)
 STATIC_URL = '/assets/'
+
+# session
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True # 브라우저를 닫으면 세션이 만료됨
+SESSION_SAVE_EVERY_REQUEST=True

@@ -4,17 +4,21 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 {% block csslink %}{% endblock %}
+
 </head>
 <body>
 	<div id="container">
 		<div id="header">
 			<h1>MySite</h1>
 			<ul>
-				<li><a href="/user/loginform">로그인</a><li>
-				<li><a href="/user/joinform">회원가입</a><li>
-				<li><a href="/user/updateform">회원정보수정</a><li>
-				<li><a href="/user/logout">로그아웃</a><li>
-				<li>님 안녕하세요 ^^;</li>
+				{% if request.session.authUser is None%}
+					<li><a href="/user/loginform">로그인</a><li>
+					<li><a href="/user/joinform">회원가입</a><li>
+				{% else %}
+					<li><a href="/user/updateform">회원정보수정</a><li>
+					<li><a href="/user/logout">로그아웃</a><li>
+					<li>{{request.session.authUser.name}}님 안녕하세요 ^^;</li>
+				{% endif %}
 			</ul>
 		</div>
 		<div id="wrapper">
