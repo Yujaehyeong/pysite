@@ -23,7 +23,7 @@
 					<input type="text" id="kwd" name="kwd" value="">
 					<input type="submit" value="찾기">
 				</form>
-				<table class="tbl-ex">
+				<table class="tbl-ex" style="text-align: center">
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
@@ -54,6 +54,31 @@
 					{% endfor%}
 
 				</table>
+
+				<!-- pager 추가 -->
+				<div class="pager">
+					<ul>
+					{% if paging.block_start_num > 5 %}
+						<li><a href="/board?curPageNum={{paging.block_start_num | sub:1}}&showBoardNum=5">◀</a></li>
+					{% endif %}
+						{% for i in range %}
+							{% if paging.cur_page_num == i %}
+								<li class="selected">
+									<a href="/board?curPageNum={{i}}&showBoardNum=5">{{paging.block_start_num | add:forloop.counter | sub:1}}</a>
+								</li>
+							{% else %}
+								<li>
+									<a href="/board?curPageNum={{i}}&showBoardNum=5">{{paging.block_start_num | add:i | sub:1}}</a>
+								</li>
+							{% endif %}
+						{% endfor %}
+
+					{% if paging.block_last_num < paging.last_page_num %}
+						<li><a href="/board?curPageNum={{paging.block_last_num | add:1}}&showBoardNum=5">▶</a></li>
+					{% endif %}
+					</ul>
+				</div>
+				<!-- pager 추가 -->
 
 				<div class="bottom">
 					<a href="board/writeform" id="new-book">글쓰기</a>

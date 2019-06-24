@@ -1,15 +1,42 @@
-from django.db.models import Max
+from django.db.models import Max, Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from board.models import Board
+from board.models import Board, Paging
 from user.models import User
 
 
 def list(request):
-    boardlist = Board.objects.all().order_by('-groupno', 'orderno')
-    data = {'boardlist': boardlist}
+    show_board_num = request.GET.get('showBoardNum')
+    if show_board_num is None :
+        show_board_num = 5
+    else :
+        show_board_num = int(show_board_num)
+
+    cur_page_num = request.GET.get('curPageNum')
+    if cur_page_num is None :
+        cur_page_num = 1
+    else :
+        cur_page_num = int(cur_page_num)
+    paging = Paging()
+
+    board_count = len(Board.objects.values('id').annotate(Count('id')))
+    print('board_count=', board_count)
+    print('show_board_num=', show_board_num)
+    print('cur_page_num=', cur_page_num)
+    print('page_block_start_num', paging.block_start_num)
+    print('block_last_num', paging.block_last_num)
+    paging.pagingsetting(board_count, show_board_num, cur_page_num)
+
+    boardlist = Board.objects.all().order_by('-groupno', 'orderno')\
+        [paging.start_page_num:paging.start_page_num+show_board_num]
+    data = {
+        'boardlist' : boardlist,
+        'paging' : paging,
+        'range' : range(paging.block_start_num, paging.block_last_num+1)
+    }
+    print(paging.start_page_num, show_board_num)
     return render(request, 'board/list.html', data)
 
 
